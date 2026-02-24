@@ -1,6 +1,6 @@
 # sadanakb.github.io
 
-Mein persoenliches Portfolio — gebaut mit Astro, Tailwind CSS und viel Liebe zum Detail.
+Mein persoenliches Portfolio — gebaut mit Astro, Tailwind CSS.
 
 **Live:** [sadanakb.github.io](https://sadanakb.github.io)
 
