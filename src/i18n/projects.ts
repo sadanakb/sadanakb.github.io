@@ -18,7 +18,7 @@ const projectsData: Record<Lang, Project[]> = {
       description: 'E-Invoicing-Plattform für XRechnung und ZUGFeRD — EU-konforme elektronische Rechnungen generieren, validieren und versenden.',
       features: [
         'XRechnung & ZUGFeRD Generierung',
-        '222 automatisierte Tests',
+        '170+ automatisierte Tests',
         'PDF-Rendering mit Briefkopf',
         'REST-API mit FastAPI',
       ],
@@ -31,7 +31,7 @@ const projectsData: Record<Lang, Project[]> = {
       title: 'Mathemaxxing',
       description: 'Adaptive Mathe-Lernapp für Klassen 1-7 mit Gamification, Theorie-Inhalten und intelligenter Schwierigkeitsanpassung.',
       features: [
-        '27+ Themen mit Aufgaben-Generatoren',
+        '120+ Themen für Klasse 1-7',
         'Adaptiver Schwierigkeitsgrad',
         'Gamification mit XP & Streaks',
         'PWA-fähig',
@@ -47,10 +47,10 @@ const projectsData: Record<Lang, Project[]> = {
       features: [
         'KI-Bewertung der Antworten',
         'Echtzeit-Multiplayer',
-        'Wortschatz-Kategorien',
+        '108 Situationen in 12 Kategorien',
         'Ranglisten-System',
       ],
-      tech: ['React 18', 'TypeScript', 'Claude API', 'WebSocket'],
+      tech: ['React 18', 'JavaScript', 'Claude API', 'WebSocket'],
       github: 'https://github.com/sadanakb/eloquent',
       screenshot: '/screenshots/eloquent.webp',
     },
@@ -71,7 +71,7 @@ const projectsData: Record<Lang, Project[]> = {
     {
       id: 'claude-orchestrator',
       title: 'Claude Orchestrator',
-      description: 'Open-Source Context-Management für Claude Code — automatische Checkpoints, Session-Restarts und eine StatusLine-Ampel für den Workflow.',
+      description: 'Workflow-Hooks für Claude Code — automatische Checkpoints, Session-Restarts und eine Context-Ampel.',
       features: [
         'Automatische Checkpoints nach jeder Teilaufgabe',
         'Auto-Restart bei Context-Limit',
@@ -90,7 +90,7 @@ const projectsData: Record<Lang, Project[]> = {
       description: 'E-invoicing platform for XRechnung and ZUGFeRD — generate, validate, and send EU-compliant electronic invoices.',
       features: [
         'XRechnung & ZUGFeRD generation',
-        '222 automated tests',
+        '170+ automated tests',
         'PDF rendering with letterhead',
         'REST API with FastAPI',
       ],
@@ -103,7 +103,7 @@ const projectsData: Record<Lang, Project[]> = {
       title: 'Mathemaxxing',
       description: 'Adaptive math learning app for grades 1-7 with gamification, theory content, and intelligent difficulty adjustment.',
       features: [
-        '27+ topics with exercise generators',
+        '120+ topics for grades 1-7',
         'Adaptive difficulty',
         'Gamification with XP & streaks',
         'PWA-ready',
@@ -119,10 +119,10 @@ const projectsData: Record<Lang, Project[]> = {
       features: [
         'AI-powered answer scoring',
         'Real-time multiplayer',
-        'Vocabulary categories',
+        '108 scenarios across 12 categories',
         'Ranking system',
       ],
-      tech: ['React 18', 'TypeScript', 'Claude API', 'WebSocket'],
+      tech: ['React 18', 'JavaScript', 'Claude API', 'WebSocket'],
       github: 'https://github.com/sadanakb/eloquent',
       screenshot: '/screenshots/eloquent.webp',
     },
@@ -143,7 +143,7 @@ const projectsData: Record<Lang, Project[]> = {
     {
       id: 'claude-orchestrator',
       title: 'Claude Orchestrator',
-      description: 'Open-source context management for Claude Code — automatic checkpoints, session restarts, and a traffic-light StatusLine for your workflow.',
+      description: 'Workflow hooks for Claude Code — automatic checkpoints, session restarts, and a context traffic light.',
       features: [
         'Automatic checkpoints after each subtask',
         'Auto-restart on context limit',
