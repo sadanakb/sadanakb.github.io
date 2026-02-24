@@ -1,0 +1,93 @@
+---
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { getLangFromUrl, t, getLocalePath, getAlternateLang } from '../i18n/utils';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const lang = getLangFromUrl(Astro.url);
+const altLang = getAlternateLang(lang);
+const { title = t(lang, 'meta.title'), description = t(lang, 'meta.description') } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const alternateURL = new URL(getLocalePath(altLang), Astro.site);
+---
+
+<!DOCTYPE html>
+<html lang={lang} class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#0a0a0f" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="alternate" hreflang={lang} href={canonicalURL} />
+    <link rel="alternate" hreflang={altLang} href={alternateURL} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={new URL(lang === 'de' ? '/og-image-de.png' : '/og-image-en.png', Astro.site)} />
+    <meta property="og:locale" content={lang === 'de' ? 'de_DE' : 'en_US'} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Sadan Akbari",
+      "url": "https://sadanakb.github.io",
+      "jobTitle": lang === 'de' ? "Wirtschaftsinformatik-Student & KI-Entwickler" : "Business Informatics Student & AI Developer",
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Frankfurt University of Applied Sciences"
+      },
+      "sameAs": [
+        "https://github.com/sadanakb",
+        "https://www.linkedin.com/in/sadan-akbari"
+      ]
+    })} />
+  </head>
+  <body class="min-h-screen bg-[#0a0a0f]">
+    <div class="noise-overlay" aria-hidden="true"></div>
+    <Nav lang={lang} />
+    <main>
+      <slot />
+    </main>
+    <Footer lang={lang} />
+
+    <!-- Scroll reveal observer -->
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('revealed');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+      );
+
+      document.querySelectorAll('[data-reveal], [data-reveal-stagger]').forEach((el) => {
+        observer.observe(el);
+      });
+    </script>
+  </body>
+</html>

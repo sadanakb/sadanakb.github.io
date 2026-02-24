@@ -1,0 +1,68 @@
+---
+import { t } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<section id="hero" class="hero-spotlight relative min-h-screen flex items-center justify-center px-6 overflow-hidden">
+  <!-- Gradient mesh blobs -->
+  <div class="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-[#22d3ee] rounded-full blur-[150px] opacity-[0.07] pointer-events-none"></div>
+  <div class="absolute bottom-[-15%] left-[-10%] w-[500px] h-[500px] bg-[#8b5cf6] rounded-full blur-[130px] opacity-[0.06] pointer-events-none"></div>
+  <div class="absolute top-[40%] left-[60%] w-[300px] h-[300px] bg-[#22d3ee] rounded-full blur-[100px] opacity-[0.04] pointer-events-none"></div>
+
+  <!-- Decorative code snippet -->
+  <div class="hidden lg:block absolute right-12 top-1/2 -translate-y-1/2 opacity-25 pointer-events-none select-none">
+    <pre class="font-mono text-xs text-accent/50 leading-relaxed"><code>const developer = &#123;
+  name: "Sadan",
+  focus: "Full-Stack",
+  tools: ["Claude Code"],
+  ships: true
+&#125;;</code></pre>
+  </div>
+
+  <div class="max-w-4xl mx-auto text-center relative z-10" data-reveal>
+    <p class="text-muted text-lg md:text-xl mb-4 font-sans">{t(lang, 'hero.greeting')}</p>
+    <h1 class="font-serif text-hero font-bold tracking-tighter leading-[0.95] gradient-text mb-8">
+      {t(lang, 'hero.name')}
+    </h1>
+    <p class="text-muted text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-12">
+      {t(lang, 'hero.subtitle')}
+    </p>
+    <a
+      href="#projects"
+      class="inline-flex items-center gap-2 bg-accent text-[#0a0a0f] px-8 py-4 rounded-full text-sm font-semibold hover:shadow-glow transition-all duration-300"
+    >
+      {t(lang, 'hero.cta')}
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="mt-0.5">
+        <path d="M8 3v10M3 8l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-subtle">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="text-muted">
+      <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</section>
+
+<script>
+  const hero = document.getElementById('hero');
+  if (hero) {
+    hero.addEventListener('mousemove', (e) => {
+      const rect = hero.getBoundingClientRect();
+      hero.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+      hero.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+      hero.classList.add('active');
+    });
+    hero.addEventListener('mouseleave', () => {
+      hero.classList.remove('active');
+    });
+  }
+</script>
