@@ -18,22 +18,22 @@ const { lang } = Astro.props;
 
   <div class="max-w-4xl mx-auto text-center relative z-10">
     <!-- Greeting -->
-    <p class="hero-greeting text-muted text-lg md:text-xl mb-4 font-sans opacity-0">
+    <p class="hero-greeting text-muted text-lg md:text-xl mb-4 font-sans hero-anim">
       {t(lang, 'hero.greeting')}
     </p>
 
-    <!-- Name with SplitType animation -->
-    <h1 class="hero-name font-serif text-hero font-bold tracking-tighter leading-[0.95] gradient-text mb-8 overflow-hidden">
+    <!-- Name - visible by default, GSAP enhances -->
+    <h1 class="hero-name font-serif text-hero font-bold tracking-tighter leading-[0.95] gradient-text mb-8">
       {t(lang, 'hero.name')}
     </h1>
 
     <!-- Story-driven subtitle -->
-    <p class="hero-subtitle text-muted text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-12 opacity-0">
+    <p class="hero-subtitle text-muted text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-12 hero-anim">
       {t(lang, 'hero.subtitle')}
     </p>
 
     <!-- Magnetic CTA -->
-    <div class="hero-cta opacity-0">
+    <div class="hero-cta hero-anim">
       <MagneticButton strength={0.2}>
         <a
           href="#projects"
@@ -50,7 +50,7 @@ const { lang } = Astro.props;
   </div>
 
   <!-- Scroll indicator -->
-  <div class="hero-scroll absolute bottom-8 left-1/2 -translate-x-1/2 opacity-0">
+  <div class="hero-scroll absolute bottom-8 left-1/2 -translate-x-1/2 hero-anim">
     <div class="flex flex-col items-center gap-2">
       <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-muted/60">{t(lang, 'hero.scroll')}</span>
       <div class="w-px h-8 bg-gradient-to-b from-accent/40 to-transparent animate-bounce-subtle"></div>
@@ -67,72 +67,63 @@ const { lang } = Astro.props;
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (prefersReducedMotion) {
-    // Show everything immediately
-    document.querySelectorAll('.hero-greeting, .hero-subtitle, .hero-cta, .hero-scroll').forEach((el) => {
-      (el as HTMLElement).style.opacity = '1';
-    });
-  } else {
-    // Split the name into characters
+  if (!prefersReducedMotion) {
+    // Hide elements via GSAP (not HTML) so they're visible if JS fails
+    gsap.set('.hero-anim', { opacity: 0, y: 20 });
+
     const nameEl = document.querySelector('.hero-name');
     if (nameEl) {
       const split = new SplitType(nameEl as HTMLElement, { types: 'chars' });
 
-      // Set initial state for chars
-      if (split.chars) {
+      if (split.chars && split.chars.length > 0) {
         gsap.set(split.chars, { y: 100, opacity: 0 });
-      }
 
-      // Master timeline for load sequence
-      const tl = gsap.timeline({ delay: 0.3 });
+        const tl = gsap.timeline({ delay: 0.3 });
 
-      // 1. Greeting fade in
-      tl.to('.hero-greeting', {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        ease: 'power2.out',
-      });
+        tl.to('.hero-greeting', {
+          opacity: 1, y: 0, duration: 0.6, ease: 'power2.out',
+        });
 
-      // 2. Name letters animate in
-      if (split.chars) {
         tl.to(split.chars, {
-          y: 0,
-          opacity: 1,
-          stagger: 0.03,
-          duration: 0.8,
-          ease: 'power3.out',
+          y: 0, opacity: 1, stagger: 0.03, duration: 0.8, ease: 'power3.out',
         }, '-=0.2');
+
+        tl.to('.hero-subtitle', {
+          opacity: 1, y: 0, duration: 0.7, ease: 'power2.out',
+        }, '-=0.3');
+
+        tl.fromTo('.hero-cta', { opacity: 0, scale: 0.9 }, {
+          opacity: 1, scale: 1, y: 0, duration: 0.5, ease: 'back.out(1.7)',
+        }, '-=0.2');
+
+        tl.to('.hero-scroll', {
+          opacity: 1, y: 0, duration: 0.5, ease: 'power2.out',
+        }, '-=0.1');
+      } else {
+        // SplitType failed — show everything
+        gsap.set('.hero-anim', { opacity: 1, y: 0 });
       }
-
-      // 3. Subtitle fade up
-      tl.to('.hero-subtitle', {
-        opacity: 1,
-        y: 0,
-        duration: 0.7,
-        ease: 'power2.out',
-      }, '-=0.3');
-
-      // 4. CTA scale in
-      tl.fromTo('.hero-cta', {
-        opacity: 0,
-        scale: 0.9,
-      }, {
-        opacity: 1,
-        scale: 1,
-        duration: 0.5,
-        ease: 'back.out(1.7)',
-      }, '-=0.2');
-
-      // 5. Scroll indicator
-      tl.to('.hero-scroll', {
-        opacity: 1,
-        duration: 0.5,
-        ease: 'power2.out',
-      }, '-=0.1');
+    } else {
+      gsap.set('.hero-anim', { opacity: 1, y: 0 });
     }
 
-    // Parallax blobs on scroll
+    // Safety fallback: if still hidden after 3s, force visible
+    setTimeout(() => {
+      document.querySelectorAll('.hero-anim').forEach((el) => {
+        if (getComputedStyle(el).opacity === '0') {
+          (el as HTMLElement).style.opacity = '1';
+          (el as HTMLElement).style.transform = 'none';
+        }
+      });
+      document.querySelectorAll('.hero-name .char').forEach((el) => {
+        if (getComputedStyle(el).opacity === '0') {
+          (el as HTMLElement).style.opacity = '1';
+          (el as HTMLElement).style.transform = 'none';
+        }
+      });
+    }, 3000);
+
+    // Parallax blobs
     document.querySelectorAll('.hero-blob').forEach((blob) => {
       const speed = parseFloat((blob as HTMLElement).dataset.speed || '0.3');
       gsap.to(blob, {
@@ -148,7 +139,7 @@ const { lang } = Astro.props;
     });
   }
 
-  // Mouse spotlight (works regardless of motion preference)
+  // Mouse spotlight
   const hero = document.getElementById('hero');
   if (hero) {
     hero.addEventListener('mousemove', (e) => {

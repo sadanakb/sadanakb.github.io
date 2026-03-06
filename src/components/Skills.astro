@@ -12,21 +12,18 @@ const categories = [
   {
     title: t(lang, 'skills.dev'),
     skills: ['JavaScript / TypeScript', 'React', 'Next.js', 'Python', 'FastAPI', 'Tailwind CSS', 'Astro', 'HTML & CSS'],
-    accent: 'cyan',
     borderClass: 'border-l-cyan-500',
     glowClass: 'hover:shadow-[0_0_30px_-10px_rgba(34,211,238,0.2)]',
   },
   {
     title: t(lang, 'skills.ai'),
     skills: ['Claude Code & API', 'Prompt Design'],
-    accent: 'violet',
     borderClass: 'border-l-violet-500',
     glowClass: 'hover:shadow-[0_0_30px_-10px_rgba(139,92,246,0.2)]',
   },
   {
     title: t(lang, 'skills.tools'),
     skills: ['Git & GitHub', 'Bash / Shell', 'Vercel'],
-    accent: 'emerald',
     borderClass: 'border-l-emerald-500',
     glowClass: 'hover:shadow-[0_0_30px_-10px_rgba(16,185,129,0.2)]',
   },
@@ -42,9 +39,6 @@ const categories = [
     <div class="grid md:grid-cols-3 gap-8" id="skills-grid">
       {categories.map(cat => (
         <div class={`skill-category bg-surface/50 border border-border rounded-2xl p-6 border-l-2 ${cat.borderClass} ${cat.glowClass} transition-all duration-300 relative overflow-hidden group`}>
-          <!-- Animated gradient border top -->
-          <div class={`absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-${cat.accent}-500/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
-
           <h3 class="text-xs font-mono uppercase tracking-wider text-muted mb-6">{cat.title}</h3>
           <div class="flex flex-wrap gap-2">
             {cat.skills.map(skill => (
@@ -68,46 +62,43 @@ const categories = [
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (!prefersReducedMotion) {
-    // Title reveal
-    gsap.from('.skills-title', {
-      y: 40,
-      opacity: 0,
-      duration: 0.8,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: '.skills-title',
-        start: 'top 85%',
-        toggleActions: 'play none none none',
-      },
-    });
-
-    // Category cards stagger
-    gsap.from('.skill-category', {
-      y: 30,
-      opacity: 0,
-      stagger: 0.15,
-      duration: 0.7,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: '#skills-grid',
-        start: 'top 85%',
-        toggleActions: 'play none none none',
-      },
-    });
-
-    // Skill badges pop in
-    ScrollTrigger.batch('.skill-badge', {
-      onEnter: (elements) => {
-        gsap.from(elements, {
-          scale: 0,
-          opacity: 0,
-          stagger: 0.04,
-          duration: 0.4,
-          ease: 'back.out(1.7)',
-        });
-      },
-      start: 'top 90%',
+    // Title reveal — use fromTo so content is never permanently hidden
+    ScrollTrigger.create({
+      trigger: '.skills-title',
+      start: 'top 85%',
       once: true,
+      onEnter: () => {
+        gsap.fromTo('.skills-title',
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out' }
+        );
+      },
+    });
+
+    // Category cards stagger — visible by default, animate on scroll
+    ScrollTrigger.create({
+      trigger: '#skills-grid',
+      start: 'top 85%',
+      once: true,
+      onEnter: () => {
+        gsap.fromTo('.skill-category',
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, stagger: 0.15, duration: 0.7, ease: 'power2.out' }
+        );
+      },
+    });
+
+    // Skill badges subtle scale
+    ScrollTrigger.create({
+      trigger: '#skills-grid',
+      start: 'top 80%',
+      once: true,
+      onEnter: () => {
+        gsap.fromTo('.skill-badge',
+          { scale: 0.8, opacity: 0 },
+          { scale: 1, opacity: 1, stagger: 0.03, duration: 0.4, ease: 'back.out(1.7)', delay: 0.3 }
+        );
+      },
     });
   }
 </script>

@@ -19,7 +19,7 @@ export const ui: Record<Lang, Record<string, string>> = {
     // Hero
     'hero.greeting': 'Hallo, ich bin',
     'hero.name': 'Sadan Akbari',
-    'hero.subtitle': 'Was als Nachhilfe begann, wurde zu Software. Seit ueber einem halben Jahr baue ich mit KI-Tools Produkte, die echte Probleme loesen — von E-Rechnungen bis Mathe-Apps.',
+    'hero.subtitle': 'Was als Nachhilfe begann, wurde zu Software. Seit 2025 baue ich mit KI-Tools wie Claude Code Produkte, die echte Probleme loesen — von E-Rechnungen bis Mathe-Apps.',
     'hero.cta': 'Meine Projekte ansehen',
     'hero.scroll': 'Scroll nach unten',
 
@@ -57,12 +57,14 @@ export const ui: Record<Lang, Record<string, string>> = {
     'timeline.title': 'Meine Reise',
     'timeline.2019.title': 'Nachhilfe beginnt',
     'timeline.2019.text': 'Ehrenamtliche Nachhilfe bei der Stadt Dreieich — der Anfang davon, komplexe Themen einfach zu erklaeren.',
-    'timeline.2024.title': 'Harvard & Google Zertifikate',
-    'timeline.2024.text': 'CS50 AI with Python (Harvard) und Google AI Essentials — Fundament fuer KI-gestuetzte Entwicklung.',
-    'timeline.2025projects.title': '5 Production-Projekte',
-    'timeline.2025projects.text': 'Von E-Invoicing bis Mathe-Apps — fuenf Projekte, die echte Probleme loesen.',
-    'timeline.2025uni.title': 'Wirtschaftsinformatik, Frankfurt UAS',
-    'timeline.2025uni.text': 'Start des Studiums — Theorie trifft auf ein Jahr praktische Erfahrung.',
+    'timeline.2023.title': 'KI-Tools entdeckt',
+    'timeline.2023.text': 'Erste Experimente mit KI-Tools — die Faszination fuer KI-gestuetzte Entwicklung beginnt.',
+    'timeline.2025mid.title': 'Erste Projekte mit KI-Tools',
+    'timeline.2025mid.text': 'Vom Experimentieren zum Bauen: die ersten Production-Projekte entstehen mit Claude Code als Entwicklungswerkzeug.',
+    'timeline.2025certs.title': 'Harvard & Google Zertifikate',
+    'timeline.2025certs.text': 'CS50 AI with Python (Harvard) und Google AI Essentials — das theoretische Fundament zur praktischen Erfahrung.',
+    'timeline.2026.title': '5 Projekte & Studium',
+    'timeline.2026.text': 'Fuenf Production-Projekte live, Wirtschaftsinformatik an der Frankfurt UAS — Theorie und Praxis wachsen zusammen.',
 
     // Footer
     'footer.built': 'Gebaut mit Astro & Tailwind CSS',
@@ -83,7 +85,7 @@ export const ui: Record<Lang, Record<string, string>> = {
     // Hero
     'hero.greeting': 'Hi, I\'m',
     'hero.name': 'Sadan Akbari',
-    'hero.subtitle': 'What started as tutoring became software. For over half a year now, I build products with AI tools that solve real problems — from e-invoicing to math apps.',
+    'hero.subtitle': 'What started as tutoring became software. Since 2025, I build products with AI tools like Claude Code that solve real problems — from e-invoicing to math apps.',
     'hero.cta': 'View my projects',
     'hero.scroll': 'Scroll down',
 
@@ -121,12 +123,14 @@ export const ui: Record<Lang, Record<string, string>> = {
     'timeline.title': 'My Journey',
     'timeline.2019.title': 'Tutoring Begins',
     'timeline.2019.text': 'Volunteer tutoring for the city of Dreieich — the start of explaining complex topics simply.',
-    'timeline.2024.title': 'Harvard & Google Certifications',
-    'timeline.2024.text': 'CS50 AI with Python (Harvard) and Google AI Essentials — foundation for AI-powered development.',
-    'timeline.2025projects.title': '5 Production Projects',
-    'timeline.2025projects.text': 'From e-invoicing to math apps — five projects solving real problems.',
-    'timeline.2025uni.title': 'Business Informatics, Frankfurt UAS',
-    'timeline.2025uni.text': 'Starting university — theory meets a year of practical experience.',
+    'timeline.2023.title': 'Discovering AI Tools',
+    'timeline.2023.text': 'First experiments with AI tools — the fascination for AI-powered development begins.',
+    'timeline.2025mid.title': 'First Projects with AI Tools',
+    'timeline.2025mid.text': 'From experimenting to building: first production projects created with Claude Code as a development tool.',
+    'timeline.2025certs.title': 'Harvard & Google Certifications',
+    'timeline.2025certs.text': 'CS50 AI with Python (Harvard) and Google AI Essentials — theoretical foundation to complement practical experience.',
+    'timeline.2026.title': '5 Projects & University',
+    'timeline.2026.text': 'Five production projects live, Business Informatics at Frankfurt UAS — theory and practice growing together.',
 
     // Footer
     'footer.built': 'Built with Astro & Tailwind CSS',

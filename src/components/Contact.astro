@@ -81,33 +81,28 @@ const { lang } = Astro.props;
 
   if (!prefersReducedMotion) {
     // Content reveal
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: '.contact-content',
-        start: 'top 80%',
-        toggleActions: 'play none none none',
+    ScrollTrigger.create({
+      trigger: '.contact-content',
+      start: 'top 80%',
+      once: true,
+      onEnter: () => {
+        const tl = gsap.timeline();
+        tl.fromTo('.contact-title',
+          { y: 40, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out' }
+        )
+        .fromTo('.contact-subtitle',
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out' },
+          '-=0.4'
+        )
+        .fromTo('.contact-content .magnetic-wrap',
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, stagger: 0.1, duration: 0.5, ease: 'power2.out' },
+          '-=0.3'
+        );
       },
     });
-
-    tl.from('.contact-title', {
-      y: 40,
-      opacity: 0,
-      duration: 0.8,
-      ease: 'power2.out',
-    })
-    .from('.contact-subtitle', {
-      y: 20,
-      opacity: 0,
-      duration: 0.6,
-      ease: 'power2.out',
-    }, '-=0.4')
-    .from('.contact-content .magnetic-wrap', {
-      y: 20,
-      opacity: 0,
-      stagger: 0.1,
-      duration: 0.5,
-      ease: 'power2.out',
-    }, '-=0.3');
 
     // Subtle pulsing orb
     gsap.to('.contact-orb', {

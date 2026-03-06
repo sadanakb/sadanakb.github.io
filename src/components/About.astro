@@ -86,19 +86,6 @@ const languageList = t(lang, 'about.languages').split(' · ');
         </div>
       </div>
 
-      <!-- Age/Production cell — reframed -->
-      <div class="bento-card bg-surface border border-border rounded-2xl p-6 hover:border-accent/20 transition-all duration-300 group relative overflow-hidden flex flex-col items-center justify-center text-center">
-        <div class="absolute inset-0 bg-gradient-to-br from-accent/[0.03] to-transparent"></div>
-        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-        <div class="relative">
-          <span class="font-serif text-6xl font-bold text-accent leading-none">19</span>
-          <div class="mt-3 space-y-1">
-            <div class="w-8 h-px bg-accent/30 mx-auto"></div>
-            <p class="text-ink text-sm font-medium">{lang === 'de' ? 'und schon Production Software' : 'already shipping production software'}</p>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
@@ -113,31 +100,29 @@ const languageList = t(lang, 'about.languages').split(' · ');
 
   if (!prefersReducedMotion) {
     // Title reveal
-    gsap.from('.about-title', {
-      y: 40,
-      opacity: 0,
-      duration: 0.8,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: '.about-title',
-        start: 'top 85%',
-        toggleActions: 'play none none none',
+    ScrollTrigger.create({
+      trigger: '.about-title',
+      start: 'top 85%',
+      once: true,
+      onEnter: () => {
+        gsap.fromTo('.about-title',
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out' }
+        );
       },
     });
 
     // Batch stagger reveal for bento cards
-    ScrollTrigger.batch('.bento-card', {
-      onEnter: (elements) => {
-        gsap.from(elements, {
-          y: 30,
-          opacity: 0,
-          stagger: 0.1,
-          duration: 0.7,
-          ease: 'power2.out',
-        });
-      },
+    ScrollTrigger.create({
+      trigger: '#about-grid',
       start: 'top 85%',
       once: true,
+      onEnter: () => {
+        gsap.fromTo('.bento-card',
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, stagger: 0.1, duration: 0.7, ease: 'power2.out' }
+        );
+      },
     });
 
     // 3D tilt on hover for bento cards
