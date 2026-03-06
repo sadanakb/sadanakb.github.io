@@ -5,9 +5,22 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Lenis smooth scroll */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
 @layer base {
   html {
-    scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -126,4 +139,60 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Link animated underline */
+.link-animated {
+  position: relative;
+  display: inline-block;
+}
+.link-animated::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.link-animated:hover::after {
+  width: 100%;
+}
+
+/* Magnetic wrapper */
+.magnetic-wrap {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* GSAP reduced motion guard */
+@media (prefers-reduced-motion: reduce) {
+  .gsap-reveal,
+  [data-reveal],
+  [data-reveal-stagger] > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* Scroll progress bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #22d3ee, #a78bfa);
+  transform-origin: left;
+  transform: scaleX(0);
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* Timeline line drawing */
+.timeline-line {
+  background: linear-gradient(to bottom, #22d3ee, #a78bfa);
+  transform-origin: top;
+  transform: scaleY(0);
 }

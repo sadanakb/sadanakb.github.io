@@ -17,7 +17,7 @@ const alternateURL = new URL(getLocalePath(altLang), Astro.site);
 ---
 
 <!DOCTYPE html>
-<html lang={lang} class="scroll-smooth">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -52,7 +52,7 @@ const alternateURL = new URL(getLocalePath(altLang), Astro.site);
       "@type": "Person",
       "name": "Sadan Akbari",
       "url": "https://sadanakb.github.io",
-      "jobTitle": lang === 'de' ? "Wirtschaftsinformatik-Student & KI-Entwickler" : "Business Informatics Student & AI Developer",
+      "jobTitle": "AI-Native Developer",
       "alumniOf": {
         "@type": "CollegeOrUniversity",
         "name": "Frankfurt University of Applied Sciences"
@@ -71,23 +71,47 @@ const alternateURL = new URL(getLocalePath(altLang), Astro.site);
     </main>
     <Footer lang={lang} />
 
-    <!-- Scroll reveal observer -->
+    <!-- GSAP + Lenis init -->
     <script>
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('revealed');
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-      );
+      import { gsap } from 'gsap';
+      import { ScrollTrigger } from 'gsap/ScrollTrigger';
+      import Lenis from 'lenis';
 
-      document.querySelectorAll('[data-reveal], [data-reveal-stagger]').forEach((el) => {
-        observer.observe(el);
-      });
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Respect reduced motion
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (!prefersReducedMotion) {
+        // Init Lenis smooth scroll
+        const lenis = new Lenis({
+          duration: 1.2,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          smoothWheel: true,
+        });
+
+        // Connect Lenis to GSAP ScrollTrigger
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => {
+          lenis.raf(time * 1000);
+        });
+        gsap.ticker.lagSmoothing(0);
+
+        // Expose lenis globally for nav anchor links
+        (window as any).__lenis = lenis;
+      } else {
+        // Make all elements visible without animation
+        document.querySelectorAll('[data-reveal], .gsap-reveal').forEach((el) => {
+          (el as HTMLElement).style.opacity = '1';
+          (el as HTMLElement).style.transform = 'none';
+        });
+        document.querySelectorAll('[data-reveal-stagger]').forEach((el) => {
+          el.querySelectorAll(':scope > *').forEach((child) => {
+            (child as HTMLElement).style.opacity = '1';
+            (child as HTMLElement).style.transform = 'none';
+          });
+        });
+      }
     </script>
   </body>
 </html>

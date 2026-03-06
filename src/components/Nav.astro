@@ -11,13 +11,17 @@ const altLang = getAlternateLang(lang);
 
 const links = [
   { href: '#about', label: t(lang, 'nav.about') },
+  { href: '#timeline', label: t(lang, 'nav.timeline') },
   { href: '#projects', label: t(lang, 'nav.projects') },
   { href: '#skills', label: t(lang, 'nav.skills') },
   { href: '#contact', label: t(lang, 'nav.contact') },
 ];
 ---
 
-<nav class="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0f]/80 backdrop-blur-xl border-b border-[#1e1e2e]/50">
+<!-- Scroll progress bar -->
+<div class="scroll-progress" id="scroll-progress"></div>
+
+<nav id="main-nav" class="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0f]/80 backdrop-blur-xl border-b border-[#1e1e2e]/50 transition-transform duration-300">
   <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
     <!-- Logo / Name -->
     <a href={getLocalePath(lang)} class="font-serif text-xl font-bold tracking-tighter text-ink hover:text-accent hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.4)] transition-all duration-300">
@@ -27,7 +31,7 @@ const links = [
     <!-- Desktop Nav Links -->
     <div class="hidden md:flex items-center gap-8">
       {links.map(link => (
-        <a href={link.href} class="text-sm text-muted hover:text-ink transition-colors duration-200">
+        <a href={link.href} class="text-sm text-muted hover:text-ink transition-colors duration-200 link-animated" data-lenis-anchor>
           {link.label}
         </a>
       ))}
@@ -57,7 +61,7 @@ const links = [
   <div id="mobile-menu" class="md:hidden hidden bg-[#0a0a0f]/95 backdrop-blur-xl border-b border-[#1e1e2e]">
     <div class="px-6 py-6 flex flex-col gap-4">
       {links.map(link => (
-        <a href={link.href} class="text-lg text-muted hover:text-ink transition-colors duration-200 mobile-link">
+        <a href={link.href} class="text-lg text-muted hover:text-ink transition-colors duration-200 mobile-link" data-lenis-anchor>
           {link.label}
         </a>
       ))}
@@ -72,6 +76,69 @@ const links = [
 </nav>
 
 <script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // --- Scroll progress bar ---
+  if (!prefersReducedMotion) {
+    gsap.to('#scroll-progress', {
+      scaleX: 1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: document.documentElement,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 0.3,
+      },
+    });
+  }
+
+  // --- Nav hide on scroll down, show on scroll up ---
+  if (!prefersReducedMotion) {
+    const nav = document.getElementById('main-nav');
+    let lastScroll = 0;
+    const showNav = () => nav?.classList.remove('-translate-y-full');
+    const hideNav = () => nav?.classList.add('-translate-y-full');
+
+    ScrollTrigger.create({
+      start: 'top -80',
+      end: 99999,
+      onUpdate: (self) => {
+        const scroll = self.scroll();
+        if (scroll > lastScroll && scroll > 200) {
+          hideNav();
+        } else {
+          showNav();
+        }
+        lastScroll = scroll;
+      },
+    });
+  }
+
+  // --- Lenis anchor link scrolling ---
+  document.querySelectorAll('[data-lenis-anchor]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const href = (link as HTMLAnchorElement).getAttribute('href');
+      if (href?.startsWith('#')) {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          const lenis = (window as any).__lenis;
+          if (lenis) {
+            lenis.scrollTo(target, { offset: -80 });
+          } else {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      }
+    });
+  });
+
+  // --- Mobile menu toggle ---
   const btn = document.getElementById('mobile-menu-btn');
   const menu = document.getElementById('mobile-menu');
   const bar1 = document.getElementById('bar1');

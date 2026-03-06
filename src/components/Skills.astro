@@ -12,34 +12,43 @@ const categories = [
   {
     title: t(lang, 'skills.dev'),
     skills: ['JavaScript / TypeScript', 'React', 'Next.js', 'Python', 'FastAPI', 'Tailwind CSS', 'Astro', 'HTML & CSS'],
-    accent: 'border-l-cyan-500',
+    accent: 'cyan',
+    borderClass: 'border-l-cyan-500',
+    glowClass: 'hover:shadow-[0_0_30px_-10px_rgba(34,211,238,0.2)]',
   },
   {
     title: t(lang, 'skills.ai'),
     skills: ['Claude Code & API', 'Prompt Design'],
-    accent: 'border-l-violet-500',
+    accent: 'violet',
+    borderClass: 'border-l-violet-500',
+    glowClass: 'hover:shadow-[0_0_30px_-10px_rgba(139,92,246,0.2)]',
   },
   {
     title: t(lang, 'skills.tools'),
     skills: ['Git & GitHub', 'Bash / Shell', 'Vercel'],
-    accent: 'border-l-emerald-500',
+    accent: 'emerald',
+    borderClass: 'border-l-emerald-500',
+    glowClass: 'hover:shadow-[0_0_30px_-10px_rgba(16,185,129,0.2)]',
   },
 ];
 ---
 
 <section id="skills" class="py-32 md:py-40 px-6">
   <div class="max-w-6xl mx-auto">
-    <h2 class="font-serif text-4xl md:text-5xl font-bold tracking-tighter mb-16 text-ink" data-reveal>
+    <h2 class="font-serif text-4xl md:text-5xl font-bold tracking-tighter mb-16 text-ink skills-title">
       {t(lang, 'skills.title')}
     </h2>
 
-    <div class="grid md:grid-cols-3 gap-8" data-reveal-stagger>
+    <div class="grid md:grid-cols-3 gap-8" id="skills-grid">
       {categories.map(cat => (
-        <div class={`bg-surface/50 border border-border rounded-2xl p-6 border-l-2 ${cat.accent}`}>
+        <div class={`skill-category bg-surface/50 border border-border rounded-2xl p-6 border-l-2 ${cat.borderClass} ${cat.glowClass} transition-all duration-300 relative overflow-hidden group`}>
+          <!-- Animated gradient border top -->
+          <div class={`absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-${cat.accent}-500/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
+
           <h3 class="text-xs font-mono uppercase tracking-wider text-muted mb-6">{cat.title}</h3>
           <div class="flex flex-wrap gap-2">
             {cat.skills.map(skill => (
-              <span class="px-3 py-1.5 text-sm font-mono bg-surface border border-border rounded-full text-ink/80 hover:border-accent/30 hover:text-accent transition-all duration-200">
+              <span class="skill-badge px-3 py-1.5 text-sm font-mono bg-surface border border-border rounded-full text-ink/80 hover:border-accent/30 hover:text-accent transition-all duration-200">
                 {skill}
               </span>
             ))}
@@ -49,3 +58,56 @@ const categories = [
     </div>
   </div>
 </section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!prefersReducedMotion) {
+    // Title reveal
+    gsap.from('.skills-title', {
+      y: 40,
+      opacity: 0,
+      duration: 0.8,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: '.skills-title',
+        start: 'top 85%',
+        toggleActions: 'play none none none',
+      },
+    });
+
+    // Category cards stagger
+    gsap.from('.skill-category', {
+      y: 30,
+      opacity: 0,
+      stagger: 0.15,
+      duration: 0.7,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: '#skills-grid',
+        start: 'top 85%',
+        toggleActions: 'play none none none',
+      },
+    });
+
+    // Skill badges pop in
+    ScrollTrigger.batch('.skill-badge', {
+      onEnter: (elements) => {
+        gsap.from(elements, {
+          scale: 0,
+          opacity: 0,
+          stagger: 0.04,
+          duration: 0.4,
+          ease: 'back.out(1.7)',
+        });
+      },
+      start: 'top 90%',
+      once: true,
+    });
+  }
+</script>
