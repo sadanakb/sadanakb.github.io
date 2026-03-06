@@ -19,14 +19,14 @@ export const ui: Record<Lang, Record<string, string>> = {
     // Hero
     'hero.greeting': 'Hallo, ich bin',
     'hero.name': 'Sadan Akbari',
-    'hero.subtitle': 'Was als Nachhilfe begann, wurde zu Software. Seit 2025 baue ich mit KI-Tools wie Claude Code Produkte, die echte Probleme loesen — von E-Rechnungen bis Mathe-Apps.',
+    'hero.subtitle': 'Was als Nachhilfe begann, wurde zu Software. Seit 2025 baue ich mit KI-Tools wie Claude Code Produkte, die echte Probleme lösen — von E-Rechnungen bis Mathe-Apps.',
     'hero.cta': 'Meine Projekte ansehen',
     'hero.scroll': 'Scroll nach unten',
 
     // About
     'about.title': 'Über mich',
     'about.text1': 'Ich baue Production-Software mit KI-Tools wie Claude Code — von E-Invoicing-Plattformen bis adaptiven Lern-Apps. Dabei verstehe und teste ich jeden Commit. Was ich noch nicht kann, lerne ich im Prozess.',
-    'about.text2': 'Seit 2019 erklaere ich komplexe Themen einfach — erst ehrenamtlich, dann professionell als Nachhilfelehrer. Diese Faehigkeit praegt auch meine Software: jedes Projekt loest ein echtes Problem fuer echte Nutzer.',
+    'about.text2': 'Seit 2019 erkläre ich komplexe Themen einfach — erst ehrenamtlich, dann professionell als Nachhilfelehrer. Diese Fähigkeit prägt auch meine Software: jedes Projekt löst ein echtes Problem für echte Nutzer.',
     'about.study': 'Wirtschaftsinformatik, B.Sc. (seit 10/2025)',
     'about.studyPlace': 'Frankfurt University of Applied Sciences',
     'about.cert1': 'CS50 AI with Python (Harvard)',
@@ -56,15 +56,15 @@ export const ui: Record<Lang, Record<string, string>> = {
     // Timeline
     'timeline.title': 'Meine Reise',
     'timeline.2019.title': 'Nachhilfe beginnt',
-    'timeline.2019.text': 'Ehrenamtliche Nachhilfe bei der Stadt Dreieich — der Anfang davon, komplexe Themen einfach zu erklaeren.',
+    'timeline.2019.text': 'Ehrenamtliche Nachhilfe bei der Stadt Dreieich — der Anfang davon, komplexe Themen einfach zu erklären.',
     'timeline.2023.title': 'KI-Tools entdeckt',
-    'timeline.2023.text': 'Erste Experimente mit KI-Tools — die Faszination fuer KI-gestuetzte Entwicklung beginnt.',
+    'timeline.2023.text': 'Erste Experimente mit KI-Tools — die Faszination für KI-gestützte Entwicklung beginnt.',
     'timeline.2025mid.title': 'Erste Projekte mit KI-Tools',
     'timeline.2025mid.text': 'Vom Experimentieren zum Bauen: die ersten Production-Projekte entstehen mit Claude Code als Entwicklungswerkzeug.',
     'timeline.2025certs.title': 'Harvard & Google Zertifikate',
     'timeline.2025certs.text': 'CS50 AI with Python (Harvard) und Google AI Essentials — das theoretische Fundament zur praktischen Erfahrung.',
     'timeline.2026.title': '5 Projekte & Studium',
-    'timeline.2026.text': 'Fuenf Production-Projekte live, Wirtschaftsinformatik an der Frankfurt UAS — Theorie und Praxis wachsen zusammen.',
+    'timeline.2026.text': 'Fünf Production-Projekte live, Wirtschaftsinformatik an der Frankfurt UAS — Theorie und Praxis wachsen zusammen.',
 
     // Footer
     'footer.built': 'Gebaut mit Astro & Tailwind CSS',
