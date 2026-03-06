@@ -61,67 +61,42 @@ const { lang } = Astro.props;
 <script>
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
-  import SplitType from 'split-type';
 
   gsap.registerPlugin(ScrollTrigger);
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (!prefersReducedMotion) {
-    // Hide elements via GSAP (not HTML) so they're visible if JS fails
-    gsap.set('.hero-anim', { opacity: 0, y: 20 });
+    const tl = gsap.timeline({ delay: 0.3 });
 
-    const nameEl = document.querySelector('.hero-name');
-    if (nameEl) {
-      const split = new SplitType(nameEl as HTMLElement, { types: 'chars' });
+    tl.fromTo('.hero-greeting',
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }
+    );
 
-      if (split.chars && split.chars.length > 0) {
-        gsap.set(split.chars, { y: 100, opacity: 0 });
+    tl.fromTo('.hero-name',
+      { opacity: 0, y: 40 },
+      { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' },
+      '-=0.2'
+    );
 
-        const tl = gsap.timeline({ delay: 0.3 });
+    tl.fromTo('.hero-subtitle',
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' },
+      '-=0.3'
+    );
 
-        tl.to('.hero-greeting', {
-          opacity: 1, y: 0, duration: 0.6, ease: 'power2.out',
-        });
+    tl.fromTo('.hero-cta',
+      { opacity: 0, scale: 0.9 },
+      { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.7)' },
+      '-=0.2'
+    );
 
-        tl.to(split.chars, {
-          y: 0, opacity: 1, stagger: 0.03, duration: 0.8, ease: 'power3.out',
-        }, '-=0.2');
-
-        tl.to('.hero-subtitle', {
-          opacity: 1, y: 0, duration: 0.7, ease: 'power2.out',
-        }, '-=0.3');
-
-        tl.fromTo('.hero-cta', { opacity: 0, scale: 0.9 }, {
-          opacity: 1, scale: 1, y: 0, duration: 0.5, ease: 'back.out(1.7)',
-        }, '-=0.2');
-
-        tl.to('.hero-scroll', {
-          opacity: 1, y: 0, duration: 0.5, ease: 'power2.out',
-        }, '-=0.1');
-      } else {
-        // SplitType failed — show everything
-        gsap.set('.hero-anim', { opacity: 1, y: 0 });
-      }
-    } else {
-      gsap.set('.hero-anim', { opacity: 1, y: 0 });
-    }
-
-    // Safety fallback: if still hidden after 3s, force visible
-    setTimeout(() => {
-      document.querySelectorAll('.hero-anim').forEach((el) => {
-        if (getComputedStyle(el).opacity === '0') {
-          (el as HTMLElement).style.opacity = '1';
-          (el as HTMLElement).style.transform = 'none';
-        }
-      });
-      document.querySelectorAll('.hero-name .char').forEach((el) => {
-        if (getComputedStyle(el).opacity === '0') {
-          (el as HTMLElement).style.opacity = '1';
-          (el as HTMLElement).style.transform = 'none';
-        }
-      });
-    }, 3000);
+    tl.fromTo('.hero-scroll',
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' },
+      '-=0.1'
+    );
 
     // Parallax blobs
     document.querySelectorAll('.hero-blob').forEach((blob) => {
