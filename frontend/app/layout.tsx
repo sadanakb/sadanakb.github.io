@@ -9,7 +9,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'RechnungsWerk - E-Invoice OCR & XRechnung 3.0.2',
+  title: 'RechnungsKern - E-Invoice OCR & XRechnung 3.0.2',
   description:
     'Convert paper invoices to XRechnung 3.0.2 and ZUGFeRD using Tesseract OCR. EN 16931 compliant UBL XML generator.',
   keywords: ['XRechnung', 'ZUGFeRD', 'E-Rechnung', 'OCR', 'UBL', 'EN 16931'],
@@ -32,7 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {/* Brand */}
             <Link href="/" className="flex items-center gap-2 shrink-0">
               <span className="text-xl font-bold text-blue-700 tracking-tight">
-                RechnungsWerk
+                RechnungsKern
               </span>
               <span className="hidden sm:inline-flex items-center text-xs font-medium bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">
                 XRechnung 3.0.2
