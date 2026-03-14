@@ -14,7 +14,7 @@ const projectsData: Record<Lang, Project[]> = {
   de: [
     {
       id: 'rechnungswerk',
-      title: 'RechnungsWerk',
+      title: 'RechnungsKern',
       description: 'E-Invoicing-Plattform für XRechnung und ZUGFeRD — EU-konforme elektronische Rechnungen generieren, validieren und versenden.',
       features: [
         'XRechnung & ZUGFeRD Generierung',
@@ -86,7 +86,7 @@ const projectsData: Record<Lang, Project[]> = {
   en: [
     {
       id: 'rechnungswerk',
-      title: 'RechnungsWerk',
+      title: 'RechnungsKern',
       description: 'E-invoicing platform for XRechnung and ZUGFeRD — generate, validate, and send EU-compliant electronic invoices.',
       features: [
         'XRechnung & ZUGFeRD generation',
