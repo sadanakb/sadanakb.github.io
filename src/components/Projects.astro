@@ -67,7 +67,7 @@ const glowColors: Record<string, string> = {
                   <img
                     src={project.screenshot}
                     alt={project.title}
-                    class="w-full h-full object-cover relative z-10"
+                    class="w-full h-full object-contain relative z-10"
                     loading={index === 0 ? 'eager' : 'lazy'}
                     onerror="this.style.display='none'"
                   />
